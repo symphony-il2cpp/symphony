@@ -26,7 +26,7 @@ pub fn derive_config(input: TokenStream) -> TokenStream {
     if filenames.is_empty() {
         compile_error!("The config filename must be specified using [config = \"filename\"]");
     }
-    let filename = filenames[0].clone();
+    let filename = &filenames[0];
 
     let expanded = quote! {
         impl bshook::config::Config for #name {

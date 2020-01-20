@@ -6,17 +6,20 @@ const CONFIG_PATH: &str = "/sdcard/Android/data/com.beatgames.beatsaber/files/mo
 
 pub trait Configuration: Serialize + DeserializeOwned {
     fn filename() -> &'static str;
+    fn filepath() -> String {
+        format!("{}{}.json", CONFIG_PATH, Self::filename())
+    }
     fn load() -> Result<Self> {
-        let f = File::open(format!("{}{}.json", CONFIG_PATH, Self::filename()))?;
+        let f = File::open(Self::filepath())?;
         Ok(serde_json::from_reader(f)?)
     }
     fn reload(&mut self) -> Result<()> {
-        let f = File::open(format!("{}{}.json", CONFIG_PATH, Self::filename()))?;
+        let f = File::open(Self::filepath())?;
         *self = serde_json::from_reader(f)?;
         Ok(())
     }
     fn write(&self) -> Result<()> {
-        let f = File::create(format!("{}{}.json", CONFIG_PATH, Self::filename()))?;
+        let f = File::create(Self::filepath())?;
         serde_json::to_writer_pretty(f, self)?;
         Ok(())
     }

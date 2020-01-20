@@ -1,0 +1,15 @@
+[package]
+name = "rust-bshook"
+version = "0.1.0"
+authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
+edition = "2018"
+license = "MIT"
+
+[workspace]
+members = [
+    "il2cpp",
+    "il2cpp_sys",
+]
+
+[dependencies]
+il2cpp = { path = "il2cpp" }

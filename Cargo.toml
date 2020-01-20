@@ -1,5 +1,5 @@
 [package]
-name = "rust-bshook"
+name = "bshook"
 version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"
@@ -7,12 +7,14 @@ license = "MIT"
 
 [workspace]
 members = [
+    "bshook_derive",
     "il2cpp",
     "il2cpp_sys",
 ]
 
 [dependencies]
 android_logger = "0.8"
+bshook_derive = { path = "bshook_derive" }
 il2cpp = { path = "il2cpp" }
 log = "0.4"
 serde = "1.0"

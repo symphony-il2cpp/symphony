@@ -4,7 +4,7 @@ use std::fs::File;
 
 const CONFIG_PATH: &str = "/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/";
 
-pub trait Configuration: Serialize + DeserializeOwned {
+pub trait Config: Serialize + DeserializeOwned {
     fn filename() -> &'static str;
     fn filepath() -> String {
         format!("{}{}.json", CONFIG_PATH, Self::filename())

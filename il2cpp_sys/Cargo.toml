@@ -3,6 +3,5 @@ name = "il2cpp_sys"
 version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"
-license = "MIT"
 links = "il2cpp"
 build = "build.rs"

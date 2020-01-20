@@ -1,6 +1,8 @@
 pub mod config;
 pub mod log;
 
+pub use bshook_derive::*;
+
 #[cfg(test)]
 mod tests {
     #[test]

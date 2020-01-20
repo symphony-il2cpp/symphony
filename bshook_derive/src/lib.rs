@@ -1,15 +1,15 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
-use proc_macro2::Literal;
 use quote::quote;
-use syn::{parse_macro_input, DeriveInput, Lit, Meta};
+use syn::{export::ToTokens, parse_macro_input, DeriveInput, Lit, Meta};
 
 #[proc_macro_derive(Config, attributes(config))]
 pub fn derive_config(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     let name = input.ident;
-    let filenames: Vec<Literal> = input
+
+    let filenames: Vec<proc_macro2::TokenStream> = input
         .attrs
         .into_iter()
         .filter_map(|a| a.parse_meta().ok())
@@ -18,13 +18,13 @@ pub fn derive_config(input: TokenStream) -> TokenStream {
             _ => None,
         })
         .filter_map(|nv| match nv.lit {
-            Lit::Str(s) => s.parse::<Literal>().ok(),
+            Lit::Str(s) => Some(s.into_token_stream()),
             _ => None,
         })
         .collect();
 
     if filenames.is_empty() {
-        compile_error!("The config filename must be specified using [config = \"filename\"]");
+        panic!("The config filename must be specified using [config = \"filename\"]");
     }
     let filename = &filenames[0];
 

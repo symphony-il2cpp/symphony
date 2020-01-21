@@ -2,36 +2,49 @@ extern crate proc_macro;
 
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{export::ToTokens, parse_macro_input, DeriveInput, Lit, Meta};
+use syn::{parse_macro_input, DeriveInput, Meta, MetaList, NestedMeta};
+
+const DERIVE_CONFIG_ERROR: &str =
+    "The config filename must be specified using [config(filename = \"config.json\")]";
 
 #[proc_macro_derive(Config, attributes(config))]
 pub fn derive_config(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
     let name = input.ident;
 
-    let filenames: Vec<proc_macro2::TokenStream> = input
+    // Find #[config(...)] attribute (should only be one)
+    let meta = &input
         .attrs
-        .into_iter()
-        .filter_map(|a| a.parse_meta().ok())
-        .filter_map(|m| match m {
-            Meta::NameValue(nv) => Some(nv),
-            _ => None,
-        })
-        .filter_map(|nv| match nv.lit {
-            Lit::Str(s) => Some(s.into_token_stream()),
-            _ => None,
-        })
-        .collect();
+        .iter()
+        .find(|a| a.path.is_ident("config"))
+        .expect(DERIVE_CONFIG_ERROR)
+        .parse_meta()
+        .expect(DERIVE_CONFIG_ERROR);
 
-    if filenames.is_empty() {
-        panic!("The config filename must be specified using [config = \"filename\"]");
+    // Make sure it's of kind #[config(name = "value")]
+    let nested_meta = if let Meta::List(MetaList { nested: n, .. }) = meta {
+        n.first().expect(DERIVE_CONFIG_ERROR)
+    } else {
+        panic!(DERIVE_CONFIG_ERROR);
+    };
+    let meta_name_value = if let NestedMeta::Meta(Meta::NameValue(mnv)) = nested_meta {
+        mnv
+    } else {
+        panic!(DERIVE_CONFIG_ERROR);
+    };
+
+    // Make sure it's of kind #[config(filename = "value")]
+    if !meta_name_value.path.is_ident("filename") {
+        panic!(DERIVE_CONFIG_ERROR);
     }
-    let filename = &filenames[0];
+
+    // Get value
+    let f = &meta_name_value.lit;
 
     let expanded = quote! {
         impl bshook::config::Config for #name {
-            fn filename() -> &'static str {
-                #filename
+            fn filepath() -> &'static str {
+                concat!("/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/", #f)
             }
         }
     };

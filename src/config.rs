@@ -1,24 +1,19 @@
-use result::Result;
+pub use bshook_derive::Config;
 use serde::{de::DeserializeOwned, Serialize};
 use std::fs::File;
 
-const CONFIG_PATH: &str = "/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/";
-
 pub trait Config: Serialize + DeserializeOwned {
-    fn filename() -> &'static str;
-    fn filepath() -> String {
-        format!("{}{}.json", CONFIG_PATH, Self::filename())
-    }
-    fn load() -> Result<Self> {
+    fn filepath() -> &'static str;
+    fn load() -> Result<Self, error::Error> {
         let f = File::open(Self::filepath())?;
         Ok(serde_json::from_reader(f)?)
     }
-    fn reload(&mut self) -> Result<()> {
+    fn reload(&mut self) -> Result<(), error::Error> {
         let f = File::open(Self::filepath())?;
         *self = serde_json::from_reader(f)?;
         Ok(())
     }
-    fn write(&self) -> Result<()> {
+    fn write(&self) -> Result<(), error::Error> {
         let f = File::create(Self::filepath())?;
         serde_json::to_writer_pretty(f, self)?;
         Ok(())
@@ -36,9 +31,4 @@ pub mod error {
         #[error("Invalid JSON")]
         JSON(#[from] serde_json::Error),
     }
-}
-
-pub mod result {
-    use crate::config::error::Error;
-    pub type Result<T> = std::result::Result<T, Error>;
 }

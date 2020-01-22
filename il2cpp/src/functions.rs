@@ -1,7 +1,7 @@
 use crate::types::{
     il2cpp_array_size_t, EventInfo, FieldInfo, Il2CppArray, Il2CppAssembly, Il2CppChar,
-    Il2CppClass, Il2CppImage, Il2CppMemoryCallbacks, Il2CppMethodPointer, Il2CppReflectionType,
-    Il2CppType, MethodInfo, PropertyInfo,
+    Il2CppClass, Il2CppDomain, Il2CppException, Il2CppImage, Il2CppMemoryCallbacks,
+    Il2CppMethodPointer, Il2CppReflectionType, Il2CppStat, Il2CppType, MethodInfo, PropertyInfo,
 };
 use libloading::{Library, Symbol};
 use std::ffi::c_void;
@@ -107,4 +107,40 @@ pub struct Il2CppFunctions<'l> {
         Symbol<'l, unsafe extern "C" fn(*const Il2CppClass, u32) -> c_int>,
     pub class_from_type: Symbol<'l, unsafe extern "C" fn(*const Il2CppType) -> *mut Il2CppClass>,
     pub class_get_type: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *const Il2CppType>,
+    pub class_get_type_token: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> u32>,
+    pub class_has_attribute:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut Il2CppClass) -> bool>,
+    pub class_has_references: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> bool>,
+    pub class_is_enum: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_get_image: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *const Il2CppImage>,
+    pub class_get_assemblyname:
+        Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> *const c_char>,
+    pub class_get_rank: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> c_int>,
+    pub class_get_bitmap_size: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> usize>,
+    pub class_get_bitmap: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut usize)>,
+    pub stats_dump_to_file: Symbol<'l, unsafe extern "C" fn(*const c_char) -> bool>,
+    pub stats_get_value: Symbol<'l, unsafe extern "C" fn(Il2CppStat) -> u64>,
+    pub domain_get: Symbol<'l, unsafe extern "C" fn() -> *mut Il2CppDomain>,
+    pub domain_assembly_open:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppDomain, *const c_char) -> *const Il2CppAssembly>,
+    pub domain_get_assemblies: Symbol<
+        'l,
+        unsafe extern "C" fn(*const Il2CppDomain, *mut usize) -> *mut *const Il2CppAssembly,
+    >,
+    pub exception_from_name_msg: Symbol<
+        'l,
+        unsafe extern "C" fn(
+            *const Il2CppImage,
+            *const c_char,
+            *const c_char,
+            *const c_char,
+        ) -> *mut Il2CppException,
+    >,
+    pub get_exception_argument_null:
+        Symbol<'l, unsafe extern "C" fn(*const c_char) -> *mut Il2CppException>,
+    pub format_exception:
+        Symbol<'l, unsafe extern "C" fn(*const Il2CppException, *mut c_char, c_int)>,
+    pub format_stack_trace:
+        Symbol<'l, unsafe extern "C" fn(*const Il2CppException, *mut c_char, c_int)>,
+    pub unhandled_exception: Symbol<'l, unsafe extern "C" fn(*mut Il2CppException)>,
 }

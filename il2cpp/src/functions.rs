@@ -1,6 +1,7 @@
 use crate::types::{
-    il2cpp_array_size_t, Il2CppArray, Il2CppChar, Il2CppClass, Il2CppImage, Il2CppMemoryCallbacks,
-    Il2CppMethodPointer,
+    il2cpp_array_size_t, EventInfo, FieldInfo, Il2CppArray, Il2CppAssembly, Il2CppChar,
+    Il2CppClass, Il2CppImage, Il2CppMemoryCallbacks, Il2CppMethodPointer, Il2CppReflectionType,
+    Il2CppType, MethodInfo, PropertyInfo,
 };
 use libloading::{Library, Symbol};
 use std::ffi::c_void;
@@ -44,4 +45,66 @@ pub struct Il2CppFunctions<'l> {
             il2cpp_array_size_t,
         ) -> *mut Il2CppArray,
     >,
+    pub bounded_array_class_get:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, u32, bool) -> *mut Il2CppClass>,
+    pub array_element_size: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> c_int>,
+    pub assembly_get_image:
+        Symbol<'l, unsafe extern "C" fn(*const Il2CppAssembly) -> *const Il2CppImage>,
+    pub class_enum_basetype:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *const Il2CppType>,
+    pub class_is_generic: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_is_inflated: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_is_assignable_from:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut Il2CppClass) -> bool>,
+    pub class_is_subclass_of:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut Il2CppClass, bool) -> bool>,
+    pub class_has_parent:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut Il2CppClass) -> bool>,
+    pub class_from_il2cpp_type:
+        Symbol<'l, unsafe extern "C" fn(*const Il2CppType) -> *mut Il2CppClass>,
+    pub class_from_name: Symbol<
+        'l,
+        unsafe extern "C" fn(*const Il2CppImage, *const c_char, *const c_char) -> *mut Il2CppClass,
+    >,
+    pub class_from_system_type:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppReflectionType) -> *mut Il2CppClass>,
+    pub class_get_element_lass:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *mut Il2CppClass>,
+    pub class_get_events:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut c_void) -> *const EventInfo>,
+    pub class_get_fields:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut c_void) -> *mut FieldInfo>,
+    pub class_get_nested_types:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut c_void) -> *mut Il2CppClass>,
+    pub class_get_interfaces:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut c_void) -> *mut Il2CppClass>,
+    pub class_get_properties:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut c_void) -> *const PropertyInfo>,
+    pub class_get_property_from_name:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *const c_char) -> *const PropertyInfo>,
+    pub class_get_field_from_name:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *const c_char) -> *mut FieldInfo>,
+    pub class_get_methods:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, *mut c_void) -> *const MethodInfo>,
+    pub class_get_method_from_name: Symbol<
+        'l,
+        unsafe extern "C" fn(*mut Il2CppClass, *const c_char, c_int) -> *const MethodInfo,
+    >,
+    pub class_get_name: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *const c_char>,
+    pub class_get_namespace: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *const c_char>,
+    pub class_get_parent: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *mut Il2CppClass>,
+    pub class_get_declaring_type:
+        Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *mut Il2CppClass>,
+    pub class_instance_size: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> i32>,
+    pub class_num_fields: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> usize>,
+    pub class_is_valuetype: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_value_size: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass, u32) -> i32>,
+    pub class_is_blittable: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_get_flags: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> c_int>,
+    pub class_is_abstract: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_is_interface: Symbol<'l, unsafe extern "C" fn(*const Il2CppClass) -> bool>,
+    pub class_array_element_size:
+        Symbol<'l, unsafe extern "C" fn(*const Il2CppClass, u32) -> c_int>,
+    pub class_from_type: Symbol<'l, unsafe extern "C" fn(*const Il2CppType) -> *mut Il2CppClass>,
+    pub class_get_type: Symbol<'l, unsafe extern "C" fn(*mut Il2CppClass) -> *const Il2CppType>,
 }

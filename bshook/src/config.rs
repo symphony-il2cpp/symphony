@@ -2,6 +2,8 @@ pub use bshook_derive::Config;
 use serde::{de::DeserializeOwned, Serialize};
 use std::fs::File;
 
+pub const CONFIG_PATH: &str = "/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/";
+
 pub trait Config: Serialize + DeserializeOwned {
     fn filepath() -> &'static str;
     fn load() -> Result<Self, error::Error> {

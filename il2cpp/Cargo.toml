@@ -4,6 +4,3 @@ version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"
 license = "MIT"
-
-[dependencies]
-il2cpp_sys = { path = "../il2cpp_sys" }

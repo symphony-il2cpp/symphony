@@ -2,5 +2,5 @@
 target = "aarch64-linux-android"
 
 [target.aarch64-linux-android]
-ar = "tools/ndk/bin/aarch64-linux-android-ar"
-linker = "tools/ndk/bin/aarch64-linux-android-clang"
+ar = "resources/ndk/bin/aarch64-linux-android-ar"
+linker = "resources/ndk/bin/aarch64-linux-android-clang"

@@ -4,12 +4,14 @@
 #ifndef __GNUC__
 #define __GNUC__
 #endif
+
 #ifndef __aarch64__
 #define __aarch64__
 #endif
 #ifndef __ANDROID__
 #define __ANDROID__
 #endif
+
 #ifdef NET_4_0
 #undef NET_4_0
 #endif

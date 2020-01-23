@@ -44,7 +44,7 @@ pub fn derive_config(input: TokenStream) -> TokenStream {
     let expanded = quote! {
         impl bshook::config::Config for #name {
             fn filepath() -> &'static str {
-                concat!(bshook::config::CONFIG_PATH, #f)
+                concat!("/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/", #f)
             }
         }
     };

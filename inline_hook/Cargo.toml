@@ -1,8 +1,6 @@
 [package]
-name = "il2cpp"
+name = "inline_hook"
 version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"
-
-[dependencies]
-libloading = "0.5"
+license = "MIT"

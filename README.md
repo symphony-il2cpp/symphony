@@ -22,5 +22,5 @@ rustup target install aarch64-linux-android
 ### Setup
 
 ```
-bindgen il2cpp/resources/wrapper.h -o il2cpp/resources/bindgen.rs --generate types,vars -- -Iresources/libil2cpp
+bindgen il2cpp/resources/wrapper.h -o il2cpp/resources/bindgen.rs --generate types,vars -- -I<LIBIL2CPP>
 ```

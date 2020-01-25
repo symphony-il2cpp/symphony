@@ -1,5 +1,5 @@
 [package]
-name = "inline_hook"
+name = "bshook_inline_hook"
 version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"

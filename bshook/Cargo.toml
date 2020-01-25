@@ -7,8 +7,8 @@ license = "MIT"
 
 [dependencies]
 android_logger = "0.8"
-bshook_derive = { path = "../bshook_derive" }
-il2cpp = { path = "../il2cpp" }
+bshook_derive = { path = "../derive" }
+bshook_il2cpp = { path = "../il2cpp" }
 serde = "1.0"
 serde_json = "1.0"
 thiserror = "1.0"

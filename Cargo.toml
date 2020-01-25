@@ -1,8 +1,12 @@
 [workspace]
 members = [
     "bshook",
-    "bshook_derive",
-    "example_mod",
+    "derive",
+    "examples/config",
     "il2cpp",
     "inline_hook",
+]
+exclude = [
+    "examples",
+    "resources",
 ]

@@ -1,5 +1,5 @@
 [package]
-name = "example_mod"
+name = "bshook_example_config"
 version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"
@@ -9,6 +9,6 @@ license = "MIT"
 crate-type = ["cdylib"]
 
 [dependencies]
-bshook = { path = "../bshook" }
+bshook = { path = "../../bshook" }
 log = "0.4"
 serde = { version = "1.0", features = ["derive"] }

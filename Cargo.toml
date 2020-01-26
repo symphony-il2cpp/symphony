@@ -1,5 +1,6 @@
 [workspace]
 members = [
+    "android_log",
     "bshook",
     "derive",
     "examples/config",

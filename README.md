@@ -1,6 +1,6 @@
 # bshook
 
-## Dependencies
+## Requirements
 
 * Rust
 * NDK
@@ -14,14 +14,15 @@ rustup target install aarch64-linux-android
 
 ## C FFI bindgens
 
-### Dependencies
+### Requirements
 
 * LLVM
 * bindgen
 
-### Setup
+### Generation
 
 ```
-bindgen il2cpp/resources/wrapper.h -o il2cpp/resources/bindgen.rs --generate types,vars -- -Iresources/libil2cpp
+bindgen android_log/resources/wrapper.h -o android_log/resources/bindgen.rs --whitelist-function __android_log_write -- -I"<NDK>/sysroot/usr/include"
+bindgen il2cpp/resources/wrapper.h -o il2cpp/resources/bindgen.rs --generate types,vars -- -I"resources/libil2cpp"
 bindgen inline_hook/resources/wrapper.h -o inline_hook/resources/bindgen.rs --whitelist-function A64HookFunctionV?
 ```

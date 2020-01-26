@@ -1,5 +1,4 @@
-use bshook::{config::Config, logging};
-use log::{error, info};
+use bshook::{config::Config, error, info};
 use serde::{Deserialize, Serialize};
 
 #[derive(Config, Serialize, Deserialize, Debug)]
@@ -11,8 +10,6 @@ struct ModConfig {
 
 #[no_mangle]
 pub extern "C" fn load() {
-    logging::init("Example Mod");
-
     let config = ModConfig::load();
     match config {
         Ok(c) => info!("Config loaded: {:#?}", c),

@@ -6,7 +6,7 @@ edition = "2018"
 license = "MIT"
 
 [dependencies]
-android_logger = "0.8"
+bshook_android_log = { path = "../android_log" }
 bshook_derive = { path = "../derive" }
 bshook_il2cpp = { path = "../il2cpp" }
 serde = "1.0"

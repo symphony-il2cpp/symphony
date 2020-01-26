@@ -20,13 +20,14 @@ static mut ORIGINAL: extern "C" fn(
 #[no_mangle]
 pub extern "C" fn load() {
     info!("Installing offsetless hook");
-    let method = match unsafe { utils::find_method("", "FireworksController", "OnEnable", 0) } {
-        Ok(m) => m,
-        Err(e) => {
-            error!("{:#?}", e);
-            return;
-        }
-    };
+    let method =
+        match unsafe { utils::find_method("", "HealthWarningFlowCoordinator", "DidActivate", 2) } {
+            Ok(m) => m,
+            Err(e) => {
+                error!("{:#?}", e);
+                return;
+            }
+        };
     unsafe {
         inline_hook::A64HookFunction(
             (*method).methodPointer.unwrap() as *mut c_void,

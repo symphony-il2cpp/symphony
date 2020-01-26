@@ -16,7 +16,7 @@ pub unsafe fn get_class_from_name(namespace: &str, name: &str) -> Result<*mut Il
     let all_assemblies = IL2CPP_SO.il2cpp_domain_get_assemblies(domain, &mut assembly_count);
     let all_assemblies = slice::from_raw_parts(all_assemblies, assembly_count);
 
-    for assembly in all_assemblies.into_iter() {
+    for assembly in all_assemblies {
         if assembly.is_null() {
             return Err(Error::NullReturn("could not get all assemblies".to_owned()));
         }

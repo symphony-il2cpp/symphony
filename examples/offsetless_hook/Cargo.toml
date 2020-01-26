@@ -1,0 +1,12 @@
+[package]
+name = "bshook_example_offsetless_hook"
+version = "0.1.0"
+authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
+edition = "2018"
+license = "MIT"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+bshook = { path = "../../bshook" }

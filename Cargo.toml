@@ -4,6 +4,7 @@ members = [
     "bshook",
     "derive",
     "examples/config",
+    "examples/offsetless_hook",
     "il2cpp",
     "inline_hook",
 ]

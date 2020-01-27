@@ -1,9 +1,15 @@
-# bshook
+# symphony
+
+WIP hook modding library for il2cpp, inspired from Unity and totally ripped off Sc2ad's [beatsaber-hook](https://github.com/sc2ad/beatsaber-hook/tree/modSettings)
+
+## Supported targets
+
+* `aarch64-linux-android`
 
 ## Requirements
 
-* Rust
-* NDK
+* Rust (rustup recommended)
+* Android NDK
 
 ## Setup
 

@@ -42,7 +42,7 @@ pub fn derive_config(input: TokenStream) -> TokenStream {
     let f = &meta_name_value.lit;
 
     let expanded = quote! {
-        impl bshook::config::Config for #name {
+        impl symphony::config::Config for #name {
             fn filepath() -> &'static str {
                 concat!("/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/", #f)
             }

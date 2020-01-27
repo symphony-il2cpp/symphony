@@ -1,7 +1,7 @@
 use crate::error::Error;
-pub use bshook_derive::Config;
 use serde::{de::DeserializeOwned, Serialize};
 use std::fs::File;
+pub use symphony_derive::Config;
 
 pub const CONFIG_PATH: &str = "/sdcard/Android/data/com.beatgames.beatsaber/files/mod_cfgs/";
 

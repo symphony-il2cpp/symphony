@@ -1,8 +1,8 @@
-use bshook_android_log::{
+use std::{ffi::CString, os::raw::c_int};
+use symphony_android_log::{
     self, ANDROID_LOG_DEBUG, ANDROID_LOG_ERROR, ANDROID_LOG_FATAL, ANDROID_LOG_INFO,
     ANDROID_LOG_VERBOSE, ANDROID_LOG_WARN,
 };
-use std::{ffi::CString, os::raw::c_int};
 
 pub enum LogLevel {
     Verbose,
@@ -30,7 +30,7 @@ pub fn log(level: LogLevel, tag: &str, message: &str) {
     let tag = CString::new(tag).unwrap();
     let text = CString::new(message).unwrap();
     unsafe {
-        bshook_android_log::__android_log_write(prio, tag.as_ptr(), text.as_ptr());
+        symphony_android_log::__android_log_write(prio, tag.as_ptr(), text.as_ptr());
     }
 }
 
@@ -40,9 +40,9 @@ macro_rules! verbose {
         $crate::log::log(
             $crate::log::LogLevel::Verbose,
             concat!(
-                "bshook[",
+                "symphony [",
                 env!("CARGO_PKG_NAME"),
-                "|",
+                " v",
                 env!("CARGO_PKG_VERSION"),
                 "]",
             ),
@@ -56,9 +56,9 @@ macro_rules! debug {
         $crate::log::log(
             $crate::log::LogLevel::Debug,
             concat!(
-                "bshook[",
+                "symphony [",
                 env!("CARGO_PKG_NAME"),
-                "|",
+                " v",
                 env!("CARGO_PKG_VERSION"),
                 "]",
             ),
@@ -72,9 +72,9 @@ macro_rules! info {
         $crate::log::log(
             $crate::log::LogLevel::Info,
             concat!(
-                "bshook[",
+                "symphony [",
                 env!("CARGO_PKG_NAME"),
-                "|",
+                " v",
                 env!("CARGO_PKG_VERSION"),
                 "]",
             ),
@@ -88,9 +88,9 @@ macro_rules! warn {
         $crate::log::log(
             $crate::log::LogLevel::Warn,
             concat!(
-                "bshook[",
+                "symphony [",
                 env!("CARGO_PKG_NAME"),
-                "|",
+                " v",
                 env!("CARGO_PKG_VERSION"),
                 "]",
             ),
@@ -104,9 +104,9 @@ macro_rules! error {
         $crate::log::log(
             $crate::log::LogLevel::Error,
             concat!(
-                "bshook[",
+                "symphony [",
                 env!("CARGO_PKG_NAME"),
-                "|",
+                " v",
                 env!("CARGO_PKG_VERSION"),
                 "]",
             ),
@@ -120,9 +120,9 @@ macro_rules! fatal {
         $crate::log::log(
             $crate::log::LogLevel::Fatal,
             concat!(
-                "bshook[",
+                "symphony [",
                 env!("CARGO_PKG_NAME"),
-                "|",
+                " v",
                 env!("CARGO_PKG_VERSION"),
                 "]",
             ),

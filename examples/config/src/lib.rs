@@ -1,5 +1,5 @@
-use bshook::{config::Config, error, info};
 use serde::{Deserialize, Serialize};
+use symphony::{config::Config, error, info};
 
 #[derive(Config, Serialize, Deserialize, Debug)]
 #[config(filename = "exampleModConfig.json")]

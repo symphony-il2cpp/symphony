@@ -8,5 +8,5 @@ pub enum Error {
     #[error("Invalid JSON")]
     JSON(#[from] serde_json::Error),
     #[error("il2cpp error")]
-    Il2Cpp(#[from] bshook_il2cpp::error::Error),
+    Il2Cpp(#[from] symphony_il2cpp::error::Error),
 }

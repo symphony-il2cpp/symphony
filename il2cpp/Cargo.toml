@@ -1,5 +1,5 @@
 [package]
-name = "bshook_il2cpp"
+name = "symphony_il2cpp"
 version = "0.1.0"
 authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"

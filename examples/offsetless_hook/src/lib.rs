@@ -1,9 +1,9 @@
-use bshook::{
+use std::ffi::c_void;
+use symphony::{
     error,
     il2cpp::{types::Il2CppObject, utils},
     info, inline_hook,
 };
-use std::ffi::c_void;
 
 extern "C" fn hook(this: *mut Il2CppObject, first_activation: bool, activation_type: i32) {
     info!("We're hooked in!");

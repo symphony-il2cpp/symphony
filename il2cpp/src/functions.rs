@@ -2,7 +2,12 @@ use crate::types::{Il2CppAssembly, Il2CppClass, Il2CppDomain, Il2CppImage, Metho
 use dlopen::wrapper::{Container, WrapperApi};
 use dlopen_derive::WrapperApi;
 use lazy_static::lazy_static;
-use std::os::raw::{c_char, c_int};
+use std::{
+    ffi::CString,
+    os::raw::{c_char, c_int},
+    process,
+};
+use symphony_android_log::{self, ANDROID_LOG_FATAL};
 
 pub const IL2CPP_SO_PATH: &str = "/data/app/com.beatgames.beatsaber-1/lib/arm64/libil2cpp.so";
 
@@ -30,6 +35,16 @@ pub struct Il2CppSO {
 }
 
 lazy_static! {
-    pub static ref IL2CPP_SO: Container<Il2CppSO> =
-        unsafe { Container::load(IL2CPP_SO_PATH).expect("Couldn't open libil2cpp.so") };
+    pub static ref IL2CPP_SO: Container<Il2CppSO> = unsafe {
+        Container::load(IL2CPP_SO_PATH).unwrap_or_else(|e| {
+            let tag = CString::new("symphony").unwrap();
+            let message = CString::new(format!("{:#}", e)).unwrap();
+            symphony_android_log::__android_log_write(
+                ANDROID_LOG_FATAL,
+                tag.as_ptr(),
+                message.as_ptr(),
+            );
+            process::exit(1);
+        })
+    };
 }

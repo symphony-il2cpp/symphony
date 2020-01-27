@@ -5,6 +5,7 @@ authors = ["Raphaël Thériault <raphael_theriault@outlook.com>"]
 edition = "2018"
 
 [dependencies]
+symphony_android_log = { path = "../android_log" }
 dlopen = "0.1"
 dlopen_derive = "0.1"
 lazy_static = "1.4"

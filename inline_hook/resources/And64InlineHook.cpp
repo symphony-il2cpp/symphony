@@ -42,11 +42,7 @@
 #define   A64_NOP              0xd503201fu
 #define   A64_JNIEXPORT        __attribute__((visibility("default")))
 #define   A64_LOGE(...)        ((void)__android_log_print(ANDROID_LOG_ERROR, "A64_HOOK", __VA_ARGS__))
-#ifndef NDEBUG
-# define  A64_LOGI(...)        ((void)__android_log_print(ANDROID_LOG_INFO, "A64_HOOK", __VA_ARGS__))
-#else
-# define  A64_LOGI(...)        ((void)0)
-#endif // NDEBUG
+#define   A64_LOGI(...)        ((void)__android_log_print(ANDROID_LOG_INFO, "A64_HOOK", __VA_ARGS__))
 typedef uint32_t *__restrict *__restrict instruction;
 typedef struct
 {

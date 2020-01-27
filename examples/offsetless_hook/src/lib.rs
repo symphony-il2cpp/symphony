@@ -7,15 +7,10 @@ use std::ffi::c_void;
 
 extern "C" fn hook(this: *mut Il2CppObject, first_activation: bool, activation_type: i32) {
     info!("We're hooked in!");
-    unsafe {
-        ORIGINAL(this, first_activation, activation_type);
-    }
+    original(this, first_activation, activation_type);
 }
-static mut ORIGINAL: extern "C" fn(
-    this: *mut Il2CppObject,
-    first_activation: bool,
-    activation_type: i32,
-) = hook;
+#[allow(unused_variables)]
+extern "C" fn original(this: *mut Il2CppObject, first_activation: bool, activation_type: i32) {}
 
 #[no_mangle]
 pub extern "C" fn load() {
@@ -32,7 +27,7 @@ pub extern "C" fn load() {
         inline_hook::A64HookFunction(
             (*method).methodPointer.unwrap() as *mut c_void,
             hook as *mut c_void,
-            &mut ORIGINAL as *mut _ as *mut *mut c_void,
+            &mut original as *mut _ as *mut *mut c_void,
         )
     }
 }

@@ -3,8 +3,10 @@ use crate::{
     functions::IL2CPP_SO,
     types::{Il2CppClass, MethodInfo},
 };
-use std::ffi::CStr;
-use std::{ffi::CString, slice};
+use std::{
+    ffi::{CStr, CString},
+    slice,
+};
 
 pub unsafe fn get_class_from_name(namespace: &str, name: &str) -> Result<*mut Il2CppClass, Error> {
     let domain = IL2CPP_SO.il2cpp_domain_get();

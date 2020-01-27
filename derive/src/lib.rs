@@ -7,6 +7,7 @@ use syn::{parse_macro_input, DeriveInput, Meta, MetaList, NestedMeta};
 const DERIVE_CONFIG_ERROR: &str =
     "The config filename must be specified using [config(filename = \"config.json\")]";
 
+// TODO: Make this stricter
 #[proc_macro_derive(Config, attributes(config))]
 pub fn derive_config(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
@@ -21,7 +22,7 @@ pub fn derive_config(input: TokenStream) -> TokenStream {
         .parse_meta()
         .expect(DERIVE_CONFIG_ERROR);
 
-    // Make sure it's of kind #[config(name = "value")]
+    // Make sure it's of kind #[config(key = "value")]
     let nested_meta = if let Meta::List(MetaList { nested: n, .. }) = meta {
         n.first().expect(DERIVE_CONFIG_ERROR)
     } else {

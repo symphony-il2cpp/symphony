@@ -1,6 +1,6 @@
 # symphony
 
-WIP hook modding library for il2cpp, inspired from Unity and totally ripped off Sc2ad's [beatsaber-hook](https://github.com/sc2ad/beatsaber-hook/tree/modSettings)
+WIP hook modding library for il2cpp, inspired from Harmony and totally ripped off Sc2ad's [beatsaber-hook](https://github.com/sc2ad/beatsaber-hook/tree/modSettings)
 
 ## Supported targets
 
@@ -18,7 +18,7 @@ rustup target install aarch64-linux-android
 <NDK>/build/tools/make_standalone_toolchain.py --api 25 --arch arm64 --install-dir resources/ndk
 ```
 
-## C FFI bindgens
+## C FFI bindings
 
 ### Requirements
 

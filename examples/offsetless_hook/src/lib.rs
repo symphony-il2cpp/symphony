@@ -28,25 +28,24 @@ pub extern "C" fn preload() {
 pub extern "C" fn load() {
     info!("Installing offsetless hook");
 
-    let method =
-        match unsafe { utils::find_method("", "HealthWarningFlowCoordinator", "DidActivate", 2) } {
-            Ok(m) => m,
-            Err(e) => {
-                error!("{:#?}", e);
-                return;
-            }
-        };
-    debug!("Method info pointer: {:#?}", method);
+    let method = match utils::find_method("", "HealthWarningFlowCoordinator", "DidActivate", 2) {
+        Ok(m) => m,
+        Err(e) => {
+            error!("{:#?}", e);
+            return;
+        }
+    };
+    debug!("Method info: {:#?}", method as *const _);
 
-    let method_pointer = match unsafe { (*method).methodPointer } {
+    let method_pointer = match method.methodPointer {
         Some(p) => p,
         None => {
             error!("No method pointer");
             return;
         }
     };
-
     debug!("Method pointer: {:#?}", method_pointer);
+
     unsafe {
         inline_hook::A64HookFunction(
             method_pointer as *mut c_void,

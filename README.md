@@ -1,6 +1,6 @@
 # symphony
 
-WIP hook modding library for il2cpp, inspired from Harmony and totally ripped off Sc2ad's [beatsaber-hook](https://github.com/sc2ad/beatsaber-hook/tree/modSettings)
+WIP hook modding library for il2cpp, inspired from Harmony and totally ripped off Sc2ad's awesome [beatsaber-hook](https://github.com/sc2ad/beatsaber-hook/tree/modSettings)
 
 ## Supported targets
 

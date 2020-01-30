@@ -3,10 +3,8 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum Error {
-    #[error("Null return value ({0})")]
-    NullReturn(String),
-    #[error("Null function parameter ({0})")]
-    NullParameter(String),
+    #[error("Null pointer ({0})")]
+    NullPointer(String),
     #[error("Nul byte in C string")]
     NulByte(#[from] NulError),
     #[error("UTF8 error")]

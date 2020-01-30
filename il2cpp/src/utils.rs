@@ -11,7 +11,7 @@ use std::{
 pub fn get_class_from_name<'a>(namespace: &str, name: &str) -> Result<&'a mut Il2CppClass, Error> {
     let domain = unsafe { IL2CPP_SO.il2cpp_domain_get() };
     if domain.is_null() {
-        return Err(Error::NullReturn("could not get domain".to_owned()));
+        return Err(Error::NullPointer("could not get domain".to_owned()));
     }
 
     let mut assembly_count = 0;
@@ -21,12 +21,14 @@ pub fn get_class_from_name<'a>(namespace: &str, name: &str) -> Result<&'a mut Il
 
     for assembly in all_assemblies {
         if assembly.is_null() {
-            return Err(Error::NullReturn("could not get all assemblies".to_owned()));
+            return Err(Error::NullPointer(
+                "could not get all assemblies".to_owned(),
+            ));
         }
 
         let image = unsafe { IL2CPP_SO.il2cpp_assembly_get_image(*assembly) };
         if image.is_null() {
-            return Err(Error::NullReturn(format!(
+            return Err(Error::NullPointer(format!(
                 "assembly with name {:?} has a null image",
                 unsafe { CStr::from_ptr((*(*assembly)).aname.name) }.to_str()?
             )));
@@ -43,7 +45,7 @@ pub fn get_class_from_name<'a>(namespace: &str, name: &str) -> Result<&'a mut Il
             return Ok(unsafe { &mut *class });
         }
     }
-    Err(Error::NullReturn(format!(
+    Err(Error::NullPointer(format!(
         "couldn't find class {:?} (namespace {:?})",
         name, namespace,
     )))
@@ -65,7 +67,7 @@ pub fn find_method<'a>(
         )
     };
     if method_info.is_null() {
-        return Err(Error::NullReturn(format!(
+        return Err(Error::NullPointer(format!(
             "couldn't find method {:?} with {} parameters in class {:?} (namespace {:?})",
             method_name, argument_count, class_name, namespace,
         )));

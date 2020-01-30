@@ -1,3 +1,4 @@
+use crate::types::Il2CppException;
 use std::{ffi::NulError, str::Utf8Error, string::FromUtf16Error};
 use thiserror::Error;
 
@@ -11,4 +12,6 @@ pub enum Error {
     Utf8(#[from] Utf8Error),
     #[error("UTF16 error")]
     FromUtf16(#[from] FromUtf16Error),
+    #[error("Il2Cpp exception")]
+    Il2CppException(#[from] Il2CppException),
 }

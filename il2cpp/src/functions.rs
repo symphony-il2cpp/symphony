@@ -1,4 +1,6 @@
-use crate::types::{Il2CppAssembly, Il2CppClass, Il2CppDomain, Il2CppImage, MethodInfo};
+use crate::types::{
+    Il2CppAssembly, Il2CppClass, Il2CppDomain, Il2CppException, Il2CppImage, MethodInfo,
+};
 use dlopen::wrapper::{Container, WrapperApi};
 use dlopen_derive::WrapperApi;
 use lazy_static::lazy_static;
@@ -32,6 +34,8 @@ pub struct Il2CppSO {
         domain: *const Il2CppDomain,
         size: *mut usize,
     ) -> *const *mut Il2CppAssembly,
+    il2cpp_format_exception:
+        unsafe extern "C" fn(ex: *const Il2CppException, message: *mut c_char, message_size: c_int),
 }
 
 lazy_static! {

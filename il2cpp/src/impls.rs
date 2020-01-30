@@ -5,9 +5,16 @@ use crate::{
 use std::slice;
 
 impl Il2CppString {
+    pub fn as_utf16(&self) -> &[u16] {
+        unsafe { self.chars.as_slice(self.length as usize) }
+    }
+
+    pub fn as_utf16_mut(&mut self) -> &mut [u16] {
+        unsafe { self.chars.as_mut_slice(self.length as usize) }
+    }
+
     pub fn to_string(&self) -> Result<String, Error> {
-        let slice = unsafe { self.chars.as_slice(self.length as usize) };
-        Ok(String::from_utf16(slice)?)
+        Ok(String::from_utf16(self.as_utf16())?)
     }
 }
 

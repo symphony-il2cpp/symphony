@@ -1,4 +1,4 @@
-use std::{ffi::NulError, str::Utf8Error};
+use std::{ffi::NulError, str::Utf8Error, string::FromUtf16Error};
 use thiserror::Error;
 
 #[derive(Error, Debug)]
@@ -9,4 +9,6 @@ pub enum Error {
     NulByte(#[from] NulError),
     #[error("UTF8 error")]
     Utf8(#[from] Utf8Error),
+    #[error("UTF16 error")]
+    FromUtf16(#[from] FromUtf16Error),
 }

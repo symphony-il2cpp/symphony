@@ -28,7 +28,12 @@ pub extern "C" fn preload() {
 pub extern "C" fn load() {
     info!("Installing offsetless hook");
 
-    let method = match utils::find_method("", "HealthWarningFlowCoordinator", "DidActivate", 2) {
+    let method = match utils::find_method_from_name_and_class_name(
+        "",
+        "HealthWarningFlowCoordinator",
+        "DidActivate",
+        2,
+    ) {
         Ok(m) => m,
         Err(e) => {
             error!("{:#?}", e);

@@ -1,12 +1,13 @@
 use crate::types::{
-    Il2CppAssembly, Il2CppClass, Il2CppDomain, Il2CppException, Il2CppImage, MethodInfo,
+    Il2CppAssembly, Il2CppClass, Il2CppDomain, Il2CppException, Il2CppImage, Il2CppObject,
+    MethodInfo,
 };
 use dlopen::wrapper::{Container, WrapperApi};
 use dlopen_derive::WrapperApi;
 use lazy_static::lazy_static;
 use std::{
     ffi::CString,
-    os::raw::{c_char, c_int},
+    os::raw::{c_char, c_int, c_void},
     process,
 };
 use symphony_android_log::{self, ANDROID_LOG_FATAL};
@@ -36,6 +37,13 @@ pub struct Il2CppSO {
     ) -> *const *mut Il2CppAssembly,
     il2cpp_format_exception:
         unsafe extern "C" fn(ex: *const Il2CppException, message: *mut c_char, message_size: c_int),
+    il2cpp_object_new: unsafe extern "C" fn(class: *const Il2CppClass) -> *mut Il2CppObject,
+    il2cpp_runtime_invoke: unsafe extern "C" fn(
+        method: *const MethodInfo,
+        obj: *mut c_void,
+        params: *mut *mut c_void,
+        exc: *mut *mut Il2CppException,
+    ) -> *mut Il2CppObject,
 }
 
 lazy_static! {
